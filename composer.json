@@ -1,0 +1,10 @@
+{
+    "require": {
+    	"jms/serializer": "0.13.*@dev"
+    },
+    "autoload": {
+        "psr-0": { 
+        	"": "src/"
+        }
+    }
+}
