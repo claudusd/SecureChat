@@ -13,7 +13,7 @@ abstract class User
      * It's to change the public key of the user.
      * @param string The new public key.
      */
-    abstract private function setPublicKey($publicKey);
+    abstract protected function setPublicKey($publicKey);
 
     /**
      * Get the public key of this user to encrypt an message for him.
@@ -25,7 +25,7 @@ abstract class User
      * It's to change the private key of the user.
      * @param string The new private key.
      */
-    abstract private function setPrivateKey($privateKey);
+    abstract protected function setPrivateKey($privateKey);
 
     /**
      * Get the private key who is encrypted for this user and he can decrypt his message.
@@ -46,4 +46,11 @@ abstract class User
             return $encryptionSystem->decrypt($this->getPrivateKey(), $key);
         throw new EncryptionException("The encryption system can't be null. We need it one to decrypt the private key.", 1);
     }
+
+    /**
+     *
+     * @param User
+     * @return
+     */
+    abstract public function equals(User $user);
 }

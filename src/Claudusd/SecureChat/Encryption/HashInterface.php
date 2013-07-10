@@ -8,10 +8,9 @@ namespace Claudusd\SecureChat\Encryption;
 interface HashInterface 
 {
 	/**
-	 *
-	 * @param
-	 * @param
-	 * @return
+	 * The methoh hash a value.
+	 * @param string The hash value.
+	 * @return string The hashed value.
 	 */
 	public function hash($value);
 }

@@ -12,9 +12,15 @@ abstract class MessageText
 {
 	/**
 	 * 
-	 * @param
+	 * @param string
 	 */
 	abstract protected function setMessage($message);
+
+	/**
+	 *
+	 * @return string
+	 */
+	abstract protected function getMessage();
 
 	/**
 	 *
@@ -24,12 +30,28 @@ abstract class MessageText
 
 	/**
 	 *
+	 * @return User
+	 */
+	abstract public function getUser();
+
+	/**
+	 *
+	 * @param User
+	 * @return 
+	 */
+	final public function isOwner(User $user)
+	{
+		return $this->getUser()->equals($user);
+	}
+
+	/**
+	 *
 	 * @param
 	 * @param
 	 * @return 
-	 * @throws EncryptionException if the encryptionSystem is null.
+	 * @throws EncryptionException if the encryption system is null.
 	 */
-	final public function encryptedMessage($message, User $user, EncryptionInterface $encryptionSystem)
+	final public function encryptMessage($message, User $user, EncryptionInterface $encryptionSystem)
 	{
 		if(is_null($message) || empty($message)) {
 
@@ -42,5 +64,18 @@ abstract class MessageText
 		}
 		$this->setMessage($encryptionSystem->encrypt($message, $user->getPublicKey()));
 		$this->setUser($user);
+	}
+
+	/**
+	 *
+	 * @param
+	 * @param
+	 * @param
+	 * @param
+	 * @return
+	 */
+	final public function decryptMessage(User $user, EncryptionInterface $encryptionSystemForMessage, EncryptionInterface $encryptionSystemForPrivateKey, $keyForDecryptPrivateKey)
+	{
+		return $encryptionSystem->decrypt($this->getMessage())
 	}
 }
