@@ -47,6 +47,7 @@ class MessageTextTest extends SecureChatTest
             $messageText = new MessageText('', $user, $encryptionRSA);
             $this->fail("No EncryptionException thrown");
         } catch(EncryptionException $e) {
+        
         }
     }
 }

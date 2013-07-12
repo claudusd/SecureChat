@@ -22,32 +22,33 @@ abstract class MessageText
 		$this->setUser($user);
 		$this->encryptMessage($message, $encryptionSystem);
 	}
+
 	/**
-	 * 
+	 * To set the message encrypted.
 	 * @param string
 	 */
 	abstract protected function setMessage($message);
 
 	/**
-	 *
+	 * To get the message encrypted.
 	 * @return string
 	 */
 	abstract public function getMessage();
 
 	/**
-	 *
+	 * To the the user who can crypt and decrypt the message.
 	 * @param User The user who can decrypt this message text.
 	 */
 	abstract protected function setUser(User $user);
 
 	/**
-	 *
-	 * @return User
+	 * To get the user wo are able encrypt and decrypt the message
+	 * @return User The user.
 	 */
 	abstract public function getUser();
 
 	/**
-	 *
+	 * To know if the user is owner of this message.
 	 * @param User
 	 * @return 
 	 */
@@ -57,11 +58,10 @@ abstract class MessageText
 	}
 
 	/**
-	 *
-	 * @param
-	 * @param
-	 * @return 
-	 * @throws EncryptionException if the encryption system is null.
+	 * It to encrypt the message.
+	 * @param string The message to encrypt.
+	 * @param EncryptionInterface The encrytion system to use to encrypt the message.
+	 * @throws EncryptionException if the message is incorrect.
 	 */
 	final private function encryptMessage($message, EncryptionInterface $encryptionSystem)
 	{
@@ -72,7 +72,7 @@ abstract class MessageText
 	}
 
 	/**
-	 *
+	 * It's the 
 	 * @param
 	 * @param
 	 * @param

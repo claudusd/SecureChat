@@ -4,7 +4,7 @@ namespace Claudusd\SecureChat\Tests\Model;
 
 use Claudusd\SecureChat\Tests\SecureChatTest;
 
-use Claudusd\SecureChat\Encryption\EncryptionPrivateKey;
+use Claudusd\SecureChat\Encryption\UserKey;
 use Claudusd\SecureChat\Encryption\AES\EncryptionAES256;
 use Claudusd\SecureChat\Encryption\Hash\SHA1;
 use Claudusd\SecureChat\Encryption\RSA\GenerateKeyRSA4096;
@@ -24,7 +24,7 @@ class UserTest extends SecureChatTest
     	$generateKeyRSA4096 = new GenerateKeyRSA4096();
     	$key = 'my key';
 
-    	$encryptionPrivateKey = new EncryptionPrivateKey($encryptionAES, $sha1, $generateKeyRSA4096);
+    	$encryptionPrivateKey = new UserKey($encryptionAES, $sha1, $generateKeyRSA4096);
     	$encryptionPrivateKey->encryptKey($user, $key);
 
     	$this->assertTrue($user->isKeysAreInitialized());
