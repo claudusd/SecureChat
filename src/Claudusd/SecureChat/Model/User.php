@@ -13,7 +13,7 @@ abstract class User
      * It's to change the public key of the user.
      * @param string The new public key.
      */
-    abstract protected function setPublicKey($publicKey);
+    abstract public function setPublicKey($publicKey);
 
     /**
      * Get the public key of this user to encrypt an message for him.
@@ -25,7 +25,7 @@ abstract class User
      * It's to change the private key of the user.
      * @param string The new private key.
      */
-    abstract protected function setPrivateKey($privateKey);
+    abstract public function setPrivateKey($privateKey);
 
     /**
      * Get the private key who is encrypted for this user and he can decrypt his message.
@@ -34,23 +34,24 @@ abstract class User
     abstract public function getPrivateKey();
 
     /**
-     * To get the decrypted private key ot the user.
-     * @param The key to decrypt the private key.
-     * @param EncryptionInterface The encryption system use it for decrypt the private key.
-     * @return The private key decrypted.
-     * @throws EncryptionException if the encryptionSystem is null.
+     * It's to definied
+     * @param
      */
-    final public function getDecryptedPrivateKey($key, EncryptionInterface $encryptionSystem)
-    {
-        if(!is_null($encryptionSystem))
-            return $encryptionSystem->decrypt($this->getPrivateKey(), $key);
-        throw new EncryptionException("The encryption system can't be null. We need it one to decrypt the private key.", 1);
-    }
+    abstract public function setHashKeyForPrivateKey($key);
 
     /**
-     *
+     * It's to know if the user are identical.
      * @param User
-     * @return
+     * @return True if is the same user else false.
      */
     abstract public function equals(User $user);
+
+    /**
+     * To know if the user is able to encrypt and decrypt message.
+     * @return True if the key are initialized else false.
+     */
+    final public function isKeysAreInitialized()
+    {
+        return (!is_null($this->getPublicKey()) || !is_null($this->getPrivateKey()));
+    }
 }

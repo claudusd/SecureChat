@@ -16,6 +16,7 @@ class EncryptionRSA implements EncryptionInterface
     {
     	$publicKey = openssl_pkey_get_public($key);
 		openssl_public_encrypt($message, $messageEncrypted, $publicKey);
+        openssl_free_key($publicKey);
 		return $messageEncrypted;
     }
 
@@ -26,6 +27,7 @@ class EncryptionRSA implements EncryptionInterface
     {
     	$privateKey = openssl_pkey_get_private($key);
     	openssl_private_decrypt($message, $messageDecrypted, $privateKey);
+        openssl_free_key($privateKey);
     	return $messageDecrypted;
     }
 }

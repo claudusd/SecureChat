@@ -1,4 +1,5 @@
 <?php
+
 namespace Claudusd\SecureChat\Encryption;
 
 /**

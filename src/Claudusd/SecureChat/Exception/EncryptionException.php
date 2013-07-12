@@ -4,7 +4,7 @@ namespace Claudusd\SecureChat\Exception;
 /**
  * @author Claude Dioudonnat
  */
-class EncryptionException
+class EncryptionException extends \Exception
 {
 
 }

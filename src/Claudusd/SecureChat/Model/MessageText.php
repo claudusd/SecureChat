@@ -6,10 +6,22 @@ use Claudusd\SecureChat\Encryption\EncryptionInterface;
 use Claudusd\SecureChat\Exception\EncryptionException;
 
 /**
+ * A message text containts the message encrypted and user use it for encrypted and be able to descrypt it.
  * @author Claude Dioudonnat
  */
 abstract class MessageText
 {
+	/**
+	 * The constructor is use to create a new message text.
+	 * @param string The message will be encrypted.
+	 * @param User The user who encrypts the message and going to be able to decrypt it.
+	 * @param The Encryption system use it to encrypt the message.
+	 */
+	public function __construct($message, User $user, EncryptionInterface $encryptionSystem)
+	{
+		$this->setUser($user);
+		$this->encryptMessage($message, $encryptionSystem);
+	}
 	/**
 	 * 
 	 * @param string
@@ -20,7 +32,7 @@ abstract class MessageText
 	 *
 	 * @return string
 	 */
-	abstract protected function getMessage();
+	abstract public function getMessage();
 
 	/**
 	 *
@@ -51,19 +63,12 @@ abstract class MessageText
 	 * @return 
 	 * @throws EncryptionException if the encryption system is null.
 	 */
-	final public function encryptMessage($message, User $user, EncryptionInterface $encryptionSystem)
+	final private function encryptMessage($message, EncryptionInterface $encryptionSystem)
 	{
-		if(is_null($message) || empty($message)) {
-
+		if(is_null($message) || empty($message) || !is_string($message)) {
+			throw new EncryptionException("The message can't be empty, to be encrypted. ");
 		}
-		if(is_null($user)) {
-
-		}
-		if(is_null($encryptionSystem)) {
-			throw new EncryptionException();
-		}
-		$this->setMessage($encryptionSystem->encrypt($message, $user->getPublicKey()));
-		$this->setUser($user);
+		$this->setMessage($encryptionSystem->encrypt($message, $this->getUser()->getPublicKey()));
 	}
 
 	/**
@@ -72,10 +77,11 @@ abstract class MessageText
 	 * @param
 	 * @param
 	 * @param
-	 * @return
+	 * @return string The decrypted message.
 	 */
-	final public function decryptMessage(User $user, EncryptionInterface $encryptionSystemForMessage, EncryptionInterface $encryptionSystemForPrivateKey, $keyForDecryptPrivateKey)
+	final public function decryptMessage(EncryptionInterface $encryptionSystemForMessage, EncryptionInterface $encryptionSystemForPrivateKey, $keyForDecryptPrivateKey)
 	{
-		return $encryptionSystem->decrypt($this->getMessage())
+		$decryptedKey = $encryptionSystemForPrivateKey->decrypt($this->getUser()->getPrivateKey(), $keyForDecryptPrivateKey);
+		return $encryptionSystemForMessage->decrypt($this->getMessage(), $decryptedKey);
 	}
 }
