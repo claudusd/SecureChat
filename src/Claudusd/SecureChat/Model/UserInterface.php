@@ -7,7 +7,7 @@ use Claudusd\SecureChat\Encryption\EncryptionInterface;
  * 
  * @author Claude Dioudonnat
  */
-abstract class User
+interface UserInterface
 {
     /**
      * It's to change the public key of the user.
@@ -44,14 +44,5 @@ abstract class User
      * @param User
      * @return True if is the same user else false.
      */
-    abstract public function equals(User $user);
-
-    /**
-     * To know if the user is able to encrypt and decrypt message.
-     * @return True if the key are initialized else false.
-     */
-    final public function isKeysAreInitialized()
-    {
-        return (!is_null($this->getPublicKey()) || !is_null($this->getPrivateKey()));
-    }
+    abstract public function equals(UserInterface $user);
 }

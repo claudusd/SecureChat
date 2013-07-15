@@ -3,7 +3,7 @@
 namespace Claudusd\SecureChat\Tests\Model;
 
 use Claudusd\SecureChat\Model\MessageText as BaseMessageText;
-use Claudusd\SecureChat\Model\User as BaseUser;
+use Claudusd\SecureChat\Model\UserInterface as BaseUser;
 
 class MessageText extends BaseMessageText
 {

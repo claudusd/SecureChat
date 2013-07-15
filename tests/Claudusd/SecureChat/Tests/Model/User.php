@@ -2,9 +2,9 @@
 
 namespace Claudusd\SecureChat\Tests\Model;
 
-use Claudusd\SecureChat\Model\User as BaseUser;
+use Claudusd\SecureChat\Model\UserInterface as BaseUser;
 
-class User extends BaseUser
+class User implements BaseUser
 {
     private $privateKey;
 

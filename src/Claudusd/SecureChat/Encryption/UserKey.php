@@ -2,7 +2,7 @@
 
 namespace Claudusd\SecureChat\Encryption;
 
-use Claudusd\SecureChat\Model\User;
+use Claudusd\SecureChat\Model\UserInterface;
 
 /**
  * This class is use for create a new public and private for a user and encrypt the private key with a key know only by the user.
@@ -34,10 +34,10 @@ final class UserKey
 
 	/**
 	 * This method create new public and private key and encrypt the private key with a encryption technique with another key know only by the user.
-	 * @param User The user for who we want create the new key.
+	 * @param UserInterface The user for who we want create the new key.
 	 * @param string The key use to encrypt the private key.
 	 */
-	public function encryptKey(User $user, $keyClear)
+	public function encryptKey(UserInterface $user, $keyClear)
 	{
 		$generateKey = new $this->generateKeyClassName();
 		$user->setPublicKey($generateKey->getPublicKey());
@@ -47,11 +47,11 @@ final class UserKey
 
 	/**
 	 * This method decrypt the private key for an user with the key to decrypted.
-	 * @param User The user who want decrypt the key.
+	 * @param UserInterface The user who want decrypt the key.
 	 * @param string The key to decrypt the user's private key.
 	 * @return The private key decrypted.
 	 */ 
-	public function decryptKey(User $user, $keyClear)
+	public function decryptKey(UserInterface $user, $keyClear)
 	{
 		return $this->encryptionSystemForPrivateKey->decrypt($user->getPrivateKey(), $keyClear);
 	}
@@ -64,5 +64,10 @@ final class UserKey
 	public function hashKey($keyClear)
 	{
 		return $this->hashSystemForKey->hash($keyClear);
+	}
+
+	public function isKeysAreInitialized(UserInterface $user)
+	{
+		return (!is_null($user->getPublicKey()) || !is_null($user->getPrivateKey()));
 	}
 }

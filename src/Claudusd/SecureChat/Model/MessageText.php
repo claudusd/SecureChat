@@ -17,7 +17,7 @@ abstract class MessageText
 	 * @param User The user who encrypts the message and going to be able to decrypt it.
 	 * @param The Encryption system use it to encrypt the message.
 	 */
-	public function __construct($message, User $user, EncryptionInterface $encryptionSystem)
+	public function __construct($message, UserInterface $user, EncryptionInterface $encryptionSystem)
 	{
 		$this->setUser($user);
 		$this->encryptMessage($message, $encryptionSystem);
@@ -37,22 +37,22 @@ abstract class MessageText
 
 	/**
 	 * To the the user who can crypt and decrypt the message.
-	 * @param User The user who can decrypt this message text.
+	 * @param UserInterface The user who can decrypt this message text.
 	 */
-	abstract protected function setUser(User $user);
+	abstract protected function setUser(UserInterface $user);
 
 	/**
 	 * To get the user wo are able encrypt and decrypt the message
-	 * @return User The user.
+	 * @return UserInterface The user.
 	 */
 	abstract public function getUser();
 
 	/**
 	 * To know if the user is owner of this message.
-	 * @param User
+	 * @param UserInterface
 	 * @return 
 	 */
-	final public function isOwner(User $user)
+	final public function isOwner(UserInterface $user)
 	{
 		return $this->getUser()->equals($user);
 	}
