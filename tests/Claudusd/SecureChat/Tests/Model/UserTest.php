@@ -17,7 +17,7 @@ class UserTest extends SecureChatTest
     	$this->assertInstanceOf('Claudusd\SecureChat\Model\UserInterface', $user);
 
     	$this->assertTrue($user->equals($user));
-    	$this->assertFalse($user->isKeysAreInitialized());
+    	//$this->assertFalse($user->isKeysAreInitialized());
 
     	$encryptionAES = new EncryptionAES256();
     	$sha1 = new SHA1();

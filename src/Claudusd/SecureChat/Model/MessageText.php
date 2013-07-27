@@ -17,10 +17,10 @@ abstract class MessageText
 	 * @param User The user who encrypts the message and going to be able to decrypt it.
 	 * @param The Encryption system use it to encrypt the message.
 	 */
-	public function __construct($message, UserInterface $user, EncryptionInterface $encryptionSystem)
+	public function __construct($message, UserInterface $user)
 	{
 		$this->setUser($user);
-		$this->encryptMessage($message, $encryptionSystem);
+		$this->setMessage($message);
 	}
 
 	/**
@@ -55,33 +55,5 @@ abstract class MessageText
 	final public function isOwner(UserInterface $user)
 	{
 		return $this->getUser()->equals($user);
-	}
-
-	/**
-	 * It to encrypt the message.
-	 * @param string The message to encrypt.
-	 * @param EncryptionInterface The encrytion system to use to encrypt the message.
-	 * @throws EncryptionException if the message is incorrect.
-	 */
-	final private function encryptMessage($message, EncryptionInterface $encryptionSystem)
-	{
-		if(is_null($message) || empty($message) || !is_string($message)) {
-			throw new EncryptionException("The message can't be empty, to be encrypted. ");
-		}
-		$this->setMessage($encryptionSystem->encrypt($message, $this->getUser()->getPublicKey()));
-	}
-
-	/**
-	 * It's the 
-	 * @param
-	 * @param
-	 * @param
-	 * @param
-	 * @return string The decrypted message.
-	 */
-	final public function decryptMessage(EncryptionInterface $encryptionSystemForMessage, EncryptionInterface $encryptionSystemForPrivateKey, $keyForDecryptPrivateKey)
-	{
-		$decryptedKey = $encryptionSystemForPrivateKey->decrypt($this->getUser()->getPrivateKey(), $keyForDecryptPrivateKey);
-		return $encryptionSystemForMessage->decrypt($this->getMessage(), $decryptedKey);
 	}
 }

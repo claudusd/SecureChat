@@ -66,6 +66,11 @@ final class UserKey
 		return $this->hashSystemForKey->hash($keyClear);
 	}
 
+	/**
+	 * 
+	 * @param
+	 * @return 
+	 */
 	public function isKeysAreInitialized(UserInterface $user)
 	{
 		return (!is_null($user->getPublicKey()) || !is_null($user->getPrivateKey()));

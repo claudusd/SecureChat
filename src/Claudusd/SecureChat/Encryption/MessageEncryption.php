@@ -7,22 +7,43 @@ use Claudusd\SecureChat\Model\MessageText;
 use Claudusd\SecureChat\Model\UserInterface;
 
 /**
+ * 
  * @author Claude Dioudonnat
  */
 final class MessageEncryption
 {
+	/** The encryption system for encrypt or decrypt message. */
 	private $messageEncryption;
 
+	/** */
 	private $userKey;
 
-	public function __construct(EncryptionInterface $messageEncryption, UserKey $userKey)
+	/** */
+	private $messageTextClass;
+
+	/**
+	 * 
+	 * @param
+	 * @param
+	 * @param
+	 * @throws
+	 * @throws
+	 */
+	public function __construct(EncryptionInterface $messageEncryption, UserKey $userKey, $messageTextClass)
 	{
 		$this->messageEncryption = $messageEncryption;
 		$this->userKey = $userKey;
+		if(!class_exists($messageTextClass)) {
+			throw new \Exception("The class $messageTextClass not exist", 1);
+		}
+		if(!is_subclass_of($messageTextClass, 'Claudusd\SecureChat\Model\MessageText')) {
+			throw new \Exception("The class $messageTextClass is not a subclass of Claudusd\SecureChat\Model\MessageText", 1);
+		}
+		$this->messageTextClass = $messageTextClass;
 	}
 
 	/**
-	 *
+	 * 
 	 * @param
 	 * @param
 	 * @return MessageText
@@ -39,7 +60,7 @@ final class MessageEncryption
 			throw new EncryptionException("The user haven't keys to encrypt message.");
 		}
 		$encryptedMessage = $this->messageEncryption->encrypt($message, $user->getPublicKey());
-		return new MessageText($encryptMessage, $user);
+		return new $this->messageTextClass($encryptedMessage, $user);
 	}
 
 	/**

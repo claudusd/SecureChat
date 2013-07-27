@@ -4,7 +4,10 @@ namespace Claudusd\SecureChat\Tests\Encryption;
 
 use Claudusd\SecureChat\Tests\SecureChatTest;
 
+use Claudusd\SecureChat\Encryption\MessageEncryption;
+use Claudusd\SecureChat\Encryption\UserKey;
 use Claudusd\SecureChat\Encryption\AES\EncryptionAES256;
+use Claudusd\SecureChat\Encryption\Hash\SHA1;
 use Claudusd\SecureChat\Encryption\RSA\EncryptionRSA;
 use Claudusd\SecureChat\Encryption\RSA\GenerateKeyRSA4096;
 

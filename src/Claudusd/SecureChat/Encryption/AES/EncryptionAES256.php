@@ -9,8 +9,12 @@ use Claudusd\SecureChat\Encryption\EncryptionInterface;
  */
 class EncryptionAES256 implements EncryptionInterface
 {
+    /** */
     private $iv;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CFB);
