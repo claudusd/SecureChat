@@ -1,5 +1,17 @@
 {
+    "name": "claudusd/securechat",
+    "type": "library",
+    "description": "The secure chat PHP 5.3 library.",
+    "keywords": ["ssl", "encryption", "chat"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Claude Dioudonnat",
+            "email": "claude.dioudonnat@gmail.com"
+        }
+    ],
     "require": {
+         "php": ">=5.4.0",
     	"jms/serializer": "0.13.*@dev"
     },
     "require-dev": {
