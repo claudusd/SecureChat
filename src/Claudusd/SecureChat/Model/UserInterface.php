@@ -9,6 +9,7 @@ use Claudusd\SecureChat\Encryption\EncryptionInterface;
  */
 interface UserInterface
 {
+    public function getPseudo();
     /**
      * It's to change the public key of the user.
      * @param string The new public key.

@@ -1,4 +1,5 @@
 /vendor/
 /bin/
+/execution/
 composer.lock
 composer.phar

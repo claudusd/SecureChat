@@ -10,6 +10,11 @@ class User implements BaseUser
 
     private $publicKey;
 
+    public function getPseudo()
+    {
+        return 'Mon Pseudo';
+    }
+
     public function setPublicKey($publicKey)
     {
         $this->publicKey = $publicKey;
