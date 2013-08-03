@@ -3,6 +3,7 @@
 namespace Claudusd\SecureChat\Encryption;
 
 use Claudusd\SecureChat\Exception\EncryptionException;
+use Claudusd\SecureChat\Exception\InvalidClassException;
 use Claudusd\SecureChat\Model\MessageText;
 use Claudusd\SecureChat\Model\UserInterface;
 
@@ -33,12 +34,8 @@ final class MessageEncryption
 	{
 		$this->messageEncryption = $messageEncryption;
 		$this->userKey = $userKey;
-		if(!class_exists($messageTextClass)) {
-			throw new \Exception("The class $messageTextClass not exist", 1);
-		}
-		if(!is_subclass_of($messageTextClass, 'Claudusd\SecureChat\Model\MessageText')) {
-			throw new \Exception("The class $messageTextClass is not a subclass of Claudusd\SecureChat\Model\MessageText", 1);
-		}
+		if(!is_a($messageTextClass, 'Claudusd\SecureChat\Model\MessageText', true))
+			throw new InvalidClassException($messageTextClass, 'Claudusd\SecureChat\Model\MessageText', InvalidClassException::TYPE_CLASS);
 		$this->messageTextClass = $messageTextClass;
 	}
 
@@ -74,9 +71,7 @@ final class MessageEncryption
 	{
 		$user = $message->getUser();
 		if(!$this->userKey->isKeysAreInitialized($user))
-		{
 			throw new EncryptionException("The user haven't keys to decrypt message.");
-		}
 		$decryptedKey = $this->userKey->decryptKey($user, $keyToDecryptPrivateKey);
 		return $this->messageEncryption->decrypt($message->getMessage(), $decryptedKey);
 	}

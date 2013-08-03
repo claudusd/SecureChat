@@ -8,12 +8,9 @@ SecureChat
 ## Installation ##
 Add this bundle to your `composer.json` file:
 
-    "require": {
-        "claudusd/SecureChat": "*"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "https://github.com/claudusd/SecureChat.git"
+    {
+        "require": {
+                "claudusd/securechat": "dev-master"
         }
-    ]
+    }
+

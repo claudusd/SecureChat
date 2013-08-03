@@ -2,6 +2,7 @@
 
 namespace Claudusd\SecureChat\Serializer\Handler;
 
+use Claudusd\SecureChat\Exception\InvalidClassException;
 use Claudusd\SecureChat\Model\UserInterface;
 
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
@@ -13,8 +14,15 @@ class HandlerUser implements SubscribingHandlerInterface
 {
     private static $type;
 
+    /**
+     *
+     * @param 
+     * @throws 
+     */
     public function __construct($type)
     {
+        if(!is_a($type, 'Claudusd\SecureChat\Model\UserInterface', true))
+            throw new InvalidClassException($type, 'Claudusd\SecureChat\Model\UserInterface', InvalidClassException::TYPE_INTERFACE);
         self::$type = $type;
     }
 

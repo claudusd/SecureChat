@@ -17,5 +17,6 @@ class HashTest extends SecureChatTest
         $message = 'mon message';
         $this->assertNotEquals($message, $sha1->hash($message));
         $this->assertEquals(sha1($message), $sha1->hash($message));
+        $this->assertNotEquals($sha1->hash('toto'), $sha1->hash('titi'));
     }
 }

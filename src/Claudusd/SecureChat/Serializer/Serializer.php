@@ -2,6 +2,7 @@
 
 namespace Claudusd\SecureChat\Serializer;
 
+use Claudusd\SecureChat\Exception\InvalidClassException;
 use Claudusd\SecureChat\Model\CreateUser;
 use Claudusd\SecureChat\Serializer\Handler\Handler;
 use Claudusd\SecureChat\Serializer\Handler\HandlerMessageText;
@@ -38,7 +39,11 @@ class Serializer
     {
         $builder = SerializerBuilder::create();
 
+        if(!is_a($handlerMessageTextClass, 'Claudusd\SecureChat\Serializer\Handler\HandlerMessageText', true))
+            throw new InvalidClassException($handlerMessageTextClass, 'Claudusd\SecureChat\Serializer\Handler\HandlerMessageText', InvalidClassException::TYPE_CLASS);
         $handlerMessageText = new $handlerMessageTextClass($messageTextClass);
+
+
         $handlerUser = new $handlerUserClass($userClass);
         $handler = new Handler($handlerMessageText, $handlerUser);
 
@@ -63,13 +68,18 @@ class Serializer
     {
         if(is_array($messageTexts) || $messageTexts instanceof \Traversable ||  is_a($messageTexts, 'Claudusd\SecureChat\Model\MessageText'))
             return $this->serializer->serialize($messageTexts, 'json');
+        throw new \InvalidArgumentException('The message is not valid to be serialized.');
     }
 
     /**
-     *
+     * 
+     * @param string 
+     * @return 
      */
     public function deserializerCreateUser($createUserJsonData)
     {
-        return $this->serializer->deserialize($createUserJsonData, $this->createUser, 'json');
+        if(is_string($createUserJsonData))
+            return $this->serializer->deserialize($createUserJsonData, $this->createUser, 'json');
+        throw new \InvalidArgumentException('The message is not valid to be serialized.');
     }
 }

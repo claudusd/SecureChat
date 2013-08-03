@@ -12,6 +12,7 @@ use Claudusd\SecureChat\Encryption\Hash\SHA1;
 use Claudusd\SecureChat\Encryption\RSA\EncryptionRSA;
 use Claudusd\SecureChat\Encryption\RSA\GenerateKeyRSA4096;
 use Claudusd\SecureChat\Exception\EncryptionException;
+use Claudusd\SecureChat\Exception\InvalidClassException;
 
 class EncryptionMessageTest extends SecureChatTest
 {
@@ -33,7 +34,7 @@ class EncryptionMessageTest extends SecureChatTest
     {
         try {
             $messageEncryption = new MessageEncryption($this->encryption, $this->userKey, 'Claudusd\SecureChat\Tests\Model\MessageTextNotExist');
-        } catch (\Exception $expected) {
+        } catch (InvalidClassException $expected) {
             return;
         }
         $this->fail('An expected exception has not been raised.');
@@ -43,7 +44,7 @@ class EncryptionMessageTest extends SecureChatTest
     {
         try {
             $messageEncryption = new MessageEncryption($this->encryption, $this->userKey, 'Claudusd\SecureChat\Tests\Model\User');
-        } catch (\Exception $expected) {
+        } catch (InvalidClassException $expected) {
             return;
         }
         $this->fail('An expected exception has not been raised.');
@@ -94,5 +95,13 @@ class EncryptionMessageTest extends SecureChatTest
         $messageText = $messageEncryption->encryptMessage($user, 'toto');
 
         $messageEncryption->decryptMessage($messageText, $key);
+
+        $reflectionMethod = new \ReflectionMethod('Claudusd\SecureChat\Tests\Model\MessageText', 'setUser');
+        $reflectionMethod->setAccessible(true);
+        $reflectionMethod->invoke($messageText, new User());
+        try {
+            $messageEncryption->decryptMessage($messageText, $key);
+            $this->fail('An expected exception of type EncryptionException has not been raised.');
+        } catch(EncryptionException $expected) {}
     }
 }

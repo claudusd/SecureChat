@@ -2,6 +2,7 @@
 
 namespace Claudusd\SecureChat\Serializer\Handler;
 
+use Claudusd\SecureChat\Exception\InvalidClassException;
 use Claudusd\SecureChat\Model\MessageText;
 
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
@@ -13,8 +14,15 @@ class HandlerMessageText implements SubscribingHandlerInterface
 {
     private static $type;
 
+    /**
+     * 
+     * @param 
+     * @throws 
+     */
     public function __construct($type)
     {
+        if(!is_a($type, 'Claudusd\SecureChat\Model\MessageText', true))
+            throw new InvalidClassException($type, 'Claudusd\SecureChat\Model\MessageText', InvalidClassException::TYPE_CLASS);
         self::$type = $type;
     }
 
@@ -50,7 +58,7 @@ class HandlerMessageText implements SubscribingHandlerInterface
 
     public function deserializeFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
-        
+        var_dump($type);
         return 'deseria';
     }
 }

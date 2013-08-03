@@ -58,10 +58,11 @@ class Handler implements SubscribingHandlerInterface
     public function messageTextDeserializeFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
         echo 'de-message'.count($data);
-        if(count($data) == 1)
-        {
-            //$this->userDeserializeFromJson($visitor, $data['user'], $type);
+
+        foreach ($data as $message) {
+            //$messageText = new 
         }
+        var_dump($type);
         var_dump($data);
         //$this->userDeserializeFromJson($visitor, $data['user'], $type);
     }
