@@ -44,6 +44,13 @@ class HandlerMessageText implements SubscribingHandlerInterface
         );
     }
 
+    /**
+     * 
+     * @param
+     * @param
+     * @param
+     * @return
+     */
     public function serializeToJson(JsonSerializationVisitor $visitor, MessageText $messageText, array $type)
     {
         $isRoot = null === $visitor->getRoot();
@@ -56,6 +63,12 @@ class HandlerMessageText implements SubscribingHandlerInterface
         return $json;
     }
 
+    /**
+     * 
+     * @param
+     * @param
+     * @param
+     */
     public function deserializeFromJson(JsonDeserializationVisitor $visitor, $data, array $type)
     {
         var_dump($type);
