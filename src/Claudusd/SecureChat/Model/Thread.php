@@ -18,7 +18,7 @@ abstract class Thread
 
 	protected $createdAt;
 
-	abstract public function addMessage();
+	abstract public function addMessage(Message $message);
 
 	abstract public function getParticipants();
 

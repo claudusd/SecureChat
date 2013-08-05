@@ -36,13 +36,13 @@ abstract class MessageText
 	abstract public function getMessage();
 
 	/**
-	 * To the the user who can crypt and decrypt the message.
+	 * To the the user who can to ecrypt the message.
 	 * @param UserInterface The user who can decrypt this message text.
 	 */
 	abstract protected function setUser(UserInterface $user);
 
 	/**
-	 * To get the user wo are able encrypt and decrypt the message
+	 * To get the user wo are able to decrypt the message
 	 * @return UserInterface The user.
 	 */
 	abstract public function getUser();
