@@ -11,6 +11,12 @@ use Claudusd\SecureChat\Exception\EncryptionException;
  */
 abstract class Message
 {
+    public function __construct($signature, UserInterface $writer, $message)
+    {
+        $this->setSignature($signature);
+        $this->setWriter($user);
+    }
+
     abstract protected function setSignature($singature);
 
     abstract public function getSignature();
